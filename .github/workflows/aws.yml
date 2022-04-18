@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: "eu-west-1"
-  ECS_CLUSTER: "actrafer"
+  ECS_CLUSTER: "actrafer-cluster"
   ECS_SERVICE: "actrafer-nginx"
   ECR_REPOSITORY: "actrafer-nginx"
   TASK_DEFINITION: "actrafer-nginx"
