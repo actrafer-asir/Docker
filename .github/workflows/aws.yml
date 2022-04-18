@@ -1,23 +1,26 @@
-name: Deploy to ECR
-
 on:
- 
   push:
-    branches: [ master ]
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+name: actrafer Docker con nginx CI on ECR
 
 jobs:
-  
-  build:
-    
-    name: Build Image
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
 
-   
     steps:
-
-    - name: Check out code
+    - name: Checkout
       uses: actions/checkout@v2
-    
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -25,15 +28,21 @@ jobs:
         aws-secret-access-key: f2pHOwpS9HBwZJefKhIWgatQ3DEXotwhdWNVg8+7
         aws-region: eu-west-1
 
+
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
+    - name: Build, tag, and push the image to Amazon ECR
+      id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: docker_nodejs_demo
-        IMAGE_TAG: nodejs_demo_image
+        ECR_REPOSITORY: actrafer-nginx
+        IMAGE_TAG: latest
       run: |
+        # Build a docker container and push it to ECR
+        aws s3 ls 
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
