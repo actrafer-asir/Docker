@@ -1,16 +1,5 @@
-/*
-	The7 by TEMPLATE STOCK
-	templatestock.co @templatestock
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
-*/
-
 $(document).ready(function() {
 
-  /**
-   * Author: Heather Corey
-   * jQuery Simple Parallax Plugin
-   *
-   */
    
   (function($) {
    
@@ -146,7 +135,6 @@ $(function() {
       $(window).resize(checkWidth);
 
 //Google Map
-//set your google maps parameters
 	var $latitude = 45.537383,
 		$longitude = -73.597623,
 		$map_zoom = 14;
