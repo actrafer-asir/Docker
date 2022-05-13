@@ -1,4 +1,4 @@
-name: "Dependency Reviews"
+name: "Dependency Review"
 
 on: 
   pull_request:
